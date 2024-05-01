@@ -1,0 +1,124 @@
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 32px;
+    height: 100vh;
+}
+
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0px;
+}
+
+.profile h2 {
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: rgb(183, 100, 112);
+}
+
+.profile p {
+    font-size: 16px;
+    margin: 5px 0px 20px;
+    font-family: 'Lato', sans-serif;
+    color: rgb(183, 100, 112);
+}
+
+.edit-profile {
+    font-family: 'Lato', sans-serif;
+    width: 180px;
+    padding: 16px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(183, 100, 112);
+}
+
+.edit-profile:hover {
+    transform: scale(1.09);
+}
+
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.profileForm label {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+
+}
+
+.profileForm input {
+    width: 100%;
+    margin: 5px 0px 20px;
+    height: 40px;
+    padding-left: 5px;
+    font-size: 18px;
+    /* border-radius: 5px; */
+    outline: none;
+    border: 1px solid grey;
+}
+
+.profileForm .btnContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding: 0px 50px 30px;
+}
+
+.profileForm .btnContainer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.discardBtn {
+    background-color: red;
+}
+
+.confirmBtn {
+    background-color: greenyellow;
+}
+
+@media screen and (max-width: 576px) {
+    .profile h2 {
+        margin-top: 30px;
+    }
+
+}

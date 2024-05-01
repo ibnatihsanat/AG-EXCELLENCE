@@ -1,13 +1,17 @@
-// models/equipment.js
+// models/job.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
-const Equipment = sequelize.define('Equipment', {
-    image: {
+const Job = sequelize.define('Job', {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    name: {
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    owner: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -15,10 +19,10 @@ const Equipment = sequelize.define('Equipment', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    owner: {
+    location: {
         type: DataTypes.STRING,
         allowNull: false
     }
 });
 
-module.exports = Equipment;
+module.exports = Job;

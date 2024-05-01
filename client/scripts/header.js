@@ -37,22 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     logout.innerText = 'Logout'
 
-    const login = document.createElement('a')
-    login.setAttribute('href', 'login.html')
-    login.innerText = 'Log In'
-
-    const signup = document.createElement('a')
-    signup.setAttribute('href', 'signup.html')
-    signup.innerText = 'Sign Up'
-
     if (token) {
         dropdown.appendChild(profile)
         dropdown.appendChild(logout)
-    }
-
-    else {
-        dropdown.appendChild(login)
-        dropdown.appendChild(signup)
     }
 
     header.appendChild(dropdown)

@@ -2,6 +2,29 @@
     background-color: none;
 }
 
+/* Styles for the delete button */
+.delete-btn {
+    width: 5rem;
+    height: 3rem;
+    background-color: #006400;
+    color: white;
+}
+
+/* Style for the job title */
+.details h3 {
+    border-bottom: 1px solid black;
+}
+
+/* Style for the job location icon */
+.details p i {
+    margin-right: 0.5rem;
+}
+
+.details p {
+    color: #006400;
+}
+
+/* Close button */
 .close {
     color: #aaaaaa;
     float: right;
@@ -16,11 +39,28 @@
     cursor: pointer;
 }
 
+/* Header */
 header {
     margin-top: 1rem;
 }
 
-/* Form styling */
+/* Job entry */
+.job-entry {
+    border: 1px solid #006400;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 60%;
+    margin: 2rem;
+    margin-left: 5rem;
+    box-shadow: 6px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.job-entry:hover {
+    transform: scale(1.05);
+}
+
+/* Form */
 form {
     display: flex;
     flex-direction: column;
@@ -37,50 +77,10 @@ form button[type="submit"] {
     margin-top: 1rem;
     padding: 0.5rem;
     cursor: pointer;
+    background-color: #006400;
 }
 
-/* Job entry styling */
-.job-entry {
-    border: 1px solid #006400;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    width: 60%;
-    margin: 2rem;
-    margin-left: 5rem;
-    box-shadow: 6px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.job-entry:hover {
-    transform: scale(1.05);
-}
-
-#jobDescription {
-    height: 4rem;
-}
-
-/* General styles */
-
-/* H1 styling */
-h1 {
-    color: #008000;
-    text-align: center;
-}
-
-/* Button styling */
-#postBtn {
-    width: 5rem;
-    height: 3rem;
-    background-color: #008000;
-    /* Green color */
-    color: #fff;
-    /* White text color */
-    border: none;
-    cursor: pointer;
-    margin: 2rem;
-}
-
-/* Modal styles */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -98,60 +98,9 @@ h1 {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #25e625;
-    /* Green border */
     width: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Box shadow */
     overflow: hidden;
-}
-
-.close {
-    color: #008000;
-    /* Green color */
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form input[type="text"] {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #008000;
-    /* Green border */
-    border-radius: 5px;
-}
-
-form button[type="submit"] {
-    margin-top: 1rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    width: 100%;
-    background-color: #008000;
-    /* Green color */
-    color: #fff;
-    /* White text color */
-    border: none;
-    border-radius: 5px;
-}
-
-form button[type="submit"]:hover {
-    background-color: #006400;
-    /* Darker green on hover */
 }
 
 /* General styles */
@@ -159,26 +108,24 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Light gray background */
+    background-color: #f5f5f5;
 }
 
-/* H1 styling */
-#jobsHeading {
+/* H1 */
+h1 {
     color: #008000;
-    /* Green color */
     text-align: center;
 }
 
-/* Button styling */
+/* Button */
 #postBtn {
     width: 5rem;
     height: 3rem;
     background-color: #008000;
-    /* Green color */
     color: #fff;
-    /* White text color */
     border: none;
     cursor: pointer;
+    margin: 2rem;
     margin-left: 5rem;
 }
 
@@ -190,17 +137,10 @@ body {
     position: relative;
 }
 
-/* Individual slides */
+/* Slide */
 .slide {
     display: none;
     width: 100%;
-    /* box-shadow: 3px 9px 8px 10px black; */
-}
-
-.slide:hover {
-    transform: scale(1.05);
-    box-shadow: 3px 9px 8px 10px black;
-
 }
 
 /* Slide content */
@@ -227,14 +167,13 @@ body {
 
 .slide-description h2 {
     color: #008000;
-    /* Green color */
 }
 
 .slide-description p {
     color: #333;
-    /* Dark text color */
 }
 
+/* Slider container */
 .slider-container {
     height: auto;
     overflow: hidden;

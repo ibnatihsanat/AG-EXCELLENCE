@@ -26,7 +26,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-app.post("/sign-up", async (req, res) => {
+app.post("/signup", async (req, res) => {
     const { fullName, email, contact, password, role } = req.body;
 
     try {
@@ -52,13 +52,13 @@ app.post("/sign-up", async (req, res) => {
         });
 
         await newUser.save();
-        res.status(200).json("Account created");
+        res.status(200).json("Congratulations your account has been created");
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-app.post("/log-in", async (req, res) => {
+app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -117,20 +117,96 @@ app.post("/jobs", async (req, res) => {
 
 // EQUIPMENT PAGE BACKEND
 
-app.post("/equipments", async (req, res) => {
-    const { image, name, contact, owner } = req.body;
+const multer = require('multer');
+const path = require('path');
+
+// Define storage for uploaded files
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); // Specify the directory where uploaded files will be stored
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Define the filename for the uploaded file
+    }
+});
+
+// Create an instance of Multer with the defined storage
+const upload = multer({ storage: storage });
+
+// Use Multer middleware to handle file uploads
+app.post("/equipments", upload.single('image'), async (req, res) => {
+    // req.file contains information about the uploaded file
+    const imageFile = req.file;
+
+    const { name, contact, owner } = req.body;
 
     try {
-        const newEquipment = new Equipment({
-            image,
+        if (!imageFile) {
+            throw new Error('Image file is required');
+        }
+
+        const imageFileName = imageFile.filename;
+        const imageFilePath = path.join(__dirname, 'uploads', imageFileName);
+
+        // Create a new equipment instance and save it to the database
+        const newEquipment = await Equipment.create({
+            image: imageFilePath,
             name,
             contact,
             owner,
         });
 
-        await newEquipment.save();
+        res.status(200).json(newEquipment);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 
-        res.status(200).json("Equipment Added");
+
+
+app.patch('/changeinfo ', async (req, res) => {
+    const { name, email, newPassword } = req.body;
+
+    try {
+        if (!name) throw Error('Please insert your ');
+        if (!email) throw Error('Please insert your email');
+        if (!newPassword) throw Error('Please insert your new password');
+
+        // Check if the email exists in the database
+        const user = await db.execute('SELECT * FROM signup WHERE email = ?', [email]);
+
+        if (user[0].length === 0) {
+            throw Error('Email not found. Please enter a valid email.');
+        }
+
+        // Update the user's password in the database
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(newPassword, salt);
+
+        const sql = 'UPDATE signup SET name = ? password = ? WHERE email = ?';
+        await db.execute(sql, [name, hash, email]);
+
+        res.status(200).json({ message: 'Info has been changed' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get('/user/:id', async (req, res) => {
+    // const { user_id } = req.params;
+    const user_id = req.params.user_id !== undefined ? req.params.user_id : null;
+
+
+    try {
+        // Fetch user information from the database based on the provided ID
+        const user = await db.execute('SELECT * FROM signup WHERE user_id = ?', [user_id]);
+
+        if (user[0].length === 0) {
+            throw Error('User not found.');
+        }
+
+        const { name, email } = user[0][0];
+        res.status(200).json({ user_id, name, email });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

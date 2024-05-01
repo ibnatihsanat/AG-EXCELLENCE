@@ -194,8 +194,14 @@
             <span class="close">&times;</span>
             <h2>Post Equipment</h2>
             <div class="custom-file-input">
-                <input type="file" id="equipmentImage" accept="image/*" style="display: none;">
-                <label for="equipmentImage" id="imageLabel" class="file-label">Choose Image</label>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <!-- Hidden file input element -->
+                    <input type="file" id="equipmentImage" name="equipmentImage" accept="image/*"
+                        style="display: none;">
+                    <!-- Label acting as a clickable button to trigger file selection -->
+                    <label for="equipmentImage" id="imageLabel" class="file-label">Choose Image</label>
+                </form>
+
             </div>
 
             <form id="equipmentForm">
@@ -216,6 +222,7 @@
     <div id="equipmentList"></div>
 
     <script src="./scripts/equip.js"></script>
+    <script src="./scripts/header.js"></script>
 </body>
 
 </html>
