@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>deeyj</title>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let slides = document.querySelector('.slides');
+            let slideWidth = document.querySelector('.slides img').clientWidth;
+            let currentSlide = 0;
+
+            function nextSlide() {
+                currentSlide++;
+                if (currentSlide >= slides.children.length) {
+                    currentSlide = 0;
+                }
+                slides.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
+            }
+
+            setInterval(nextSlide, 3000);
+        });
+
+    </script>
+    <header>
+        <div class="headerr">
+            <li><img src="./icons/AG EXCELLENCE.png" alt=""></li>
+            <h1>AG-EXCELLENCE</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="equip.html">Equipments</a></li>
+                    <li><a href="jobs.html">Jobs</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <!-- <li><a href="sign-up.html">sign up</a></li>
+                    <li><a href="log-in.html">log in</a></li> -->
+                </ul>
+            </nav>
+        </div>
+        <!-- <button></button> -->
+    </header>
+
+    <main>
+        <!-- <img src="./icons/slider-01.jpg" alt="">
+        <h3>Where Tranquility Meets Transformation</h3>
+        <p>We show your skin and hair <br> the care and attention <br> they deserve.</p> -->
+        <div class="slider">
+            <div class="slides">
+                <img src="./icons/slider-03.jpg" alt="Image 1">
+                <img src="./icons/slider-02.jpg" alt="Image 2">
+                <img src="./icons/slider-01.jpg" alt="Image 3">
+            </div>
+        </div>
+
+    </main>
+    <div class="about-main">
+        <div class="about-writeup">
+            <h2>Welcome to AG-EXCELLENCE</h2>
+            <p>Farming is essential for sustaining life on Earth. It provides us with food, fiber, and fuel,
+                ensuring our survival and well-being. Without farming, society as we know it would cease to exist,
+                highlighting the crucial role it plays in our everyday lives.</p>
+            <h5>Our smart approach</h5>
+            <ul>
+                <li>Ensures food security for present and future generations</li>
+                <li>Promotes sustainable land management practices</li>
+                <li>Contributes to economic growth and development</li>
+                <li>Fosters environmental stewardship</li>
+                <li>Empowers rural communities and livelihoods</li>
+            </ul>
+            <p>AG-EXCELLENCE is dedicated to promoting excellence in agriculture. We believe in harnessing the power
+                of innovation and technology to drive positive change in the agricultural sector. By investing in
+                research, education, and community outreach, we strive to advance agricultural practices and ensure
+                a sustainable future for generations to come.</p>
+        </div>
+
+        <img class="img-fluid rounded" src="./icons/related-pro-01.jpg" alt="" />
+    </div>
+
+    <footer>
+        <img src="./icons/footer-line.png" alt="">
+        <div class="footer-links">
+            <div class="calculator">
+                <h2>MINI CALCULATOR</h2>
+                <input type="number" id="area" placeholder="Area (in hectares)">
+                <input type="number" id="yield" placeholder="Expected Yield (in tons)">
+                <button onclick="calculate()">Calculate</button>
+                <div id="result"></div>
+            </div>
+
+        </div>
+        <img src="./icons/footer-line.png" alt="">
+
+        <div class="socials">
+            <ul>
+                <h2>Brand</h2>
+                <li><a href="">Our Story</a></li>
+                <li><a href="">Careers</a></li>
+                <li><a href="">Privacy Policy</a></li>
+            </ul>
+            <ul>
+                <h2>Connect</h2>
+                <li><a href="">Twitter</a></li>
+                <li><a href="">Instagram</a></li>
+                <li><a href="">Pinterest</a></li>
+            </ul>
+        </div>
+        <div class="footer-itm">
+            <h3>AG-EXCELLENCE</h3>
+            <h4>Where Agriculture Meets Excellence
+            </h4>
+            <h4>© 2023 WORDWEAVER. All Rights Reserved.</h4>
+
+        </div>
+    </footer>
+    <script src="./scripts/header.js"></script>
+    <script src="./scripts/index.js"></script>
+</body>
+
+</html>

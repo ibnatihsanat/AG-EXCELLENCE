@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/job.css">
+</head>
+
+<body>
+    <script src="./scripts/header.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Set initial slide index
+            let slideIndex = 0;
+            showSlides();
+
+            // Function to display slides
+            function showSlides() {
+                let slides = document.getElementsByClassName("slide");
+                // Hide all slides
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                // Increment slideIndex and show next slide
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1 }
+                slides[slideIndex - 1].style.display = "block";
+                // Call showSlides function every 6 seconds
+                setTimeout(showSlides, 4000);
+            }
+        });
+
+    </script>
+    <header>
+        <div class="headerr">
+            <li><img src="./icons/AG EXCELLENCE.png" alt=""></li>
+            <h1>AG-EXCELLENCE</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="equip.html">Equipments</a></li>
+                    <li><a href="jobs.html">Jobs</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <h1>WHAT'S NEW</h1>
+    <div id="sliderContainer" class="slider-container">
+        <div class="slide">
+            <div class="slide-content">
+                <img src="./icons/portfolio-big-02.jpg" alt="Job Image" class="slide-image">
+                <div class="slide-description">
+                    <h2>FARMING</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere orci at ante aliquet, at
+                        gravida velit malesuada.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis dicta facilis, neque eum esse
+                        perspiciatis laboriosam minus commodi doloribus expedita!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut aliquid voluptate ipsum molestias
+                        explicabo. Itaque officiis assumenda saepe maiores, officia non obcaecati similique aut impedit
+                        vitae voluptas, cum optio suscipit!</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <img src="./icons/portfolio-big-03.jpg" alt="Job Image" class="slide-image">
+                <div class="slide-description">
+                    <h2>SPRAYING</h2>
+                    <p>Ut condimentum odio vitae ligula condimentum ultricies. Morbi at erat vel ante commodo aliquam.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa pariatur accusamus odio veniam
+                        quos laborum ratione dolorem. Enim iusto cumque ea placeat unde ab necessitatibus fugiat
+                        voluptas tenetur dolor deleniti voluptatum, officia, corporis ipsam, labore sit provident sunt
+                        dolores quibusdam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam animi qui
+                        adipisci accusantium odio quis illum repellendus veniam tempore molestiae.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <img src="./icons/related-pro-02.jpg" alt="Job Image" class="slide-image">
+                <div class="slide-description">
+                    <h2>HARROWING</h2>
+                    <p>Ut condimentum odio vitae ligula condimentum ultricies. Morbi at erat vel ante commodo aliquam.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat expedita dolor dolorem
+                        assumenda reprehenderit laboriosam sunt et? Assumenda velit inventore animi dolorem repellendus
+                        atque, quod, nostrum vel perspiciatis odio suscipit tempora nemo? Illum est molestias saepe
+                        asperiores autem quae doloribus, obcaecati enim veritatis fuga laboriosam omnis sed veniam quia
+                        numquam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <button id="postBtn">Post Job</button>
+
+    <div id="postForm" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="jobForm">
+                <input type="text" id="jobTitle" placeholder="Job Title">
+                <input type="text" id="jobDescription" placeholder="Job Description">
+                <input type="text" id="jobLocation" placeholder="Job Location">
+                <input type="text" id="ownerName" placeholder="Your Name">
+                <input type="text" id="contactInfo" placeholder="Contact Information">
+                <button type="submit" id="postJobBtn">Post Job</button>
+            </form>
+        </div>
+    </div> -->
+    <button id="postBtn">Post Job</button>
+
+    <div id="postForm" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="jobForm">
+                <input type="text" id="jobTitle" placeholder="Job Title">
+                <input type="text" id="jobDescription" placeholder="Job Description">
+                <input type="text" id="jobLocation" placeholder="Job Location">
+                <input type="text" id="ownerName" placeholder="Your Name">
+                <input type="text" id="contactInfo" placeholder="Contact Information">
+                <button type="submit" id="postJobBtn">Post Job</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="jobList"></div>
+
+
+    <div id="jobList"></div>
+
+    <script src="./scripts/job.js"></script>
+</body>
+
+</html>
