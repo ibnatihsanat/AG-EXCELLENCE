@@ -2,12 +2,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const User = require("./models/user");
+// const User = require("./models/user");
 const Job = require("./models/job");
 const Equipment = require("./models/equip");
 const bcrypt = require("bcrypt");
-const sql = require("sequelize");
 const jwt = require("jsonwebtoken");
+const http = require('http');    // to create a server for real-time connection
+require('dotenv').config();      // importing the dot env file
+const uuid = require("uuid");
+const db = require("./config/db");
+// const validator = require('validator');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
@@ -23,91 +27,86 @@ const PORT = process.env.PORT || 3000;
 // Set up routes...
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`)
 });
+const User = require('./models/user'); // Import the User model
 
 app.post("/signup", async (req, res) => {
-    const { fullName, email, contact, password, role } = req.body;
+    const { name, email, password, role } = req.body;
 
     try {
-        if (!fullName) throw Error("Please provide your full name");
-        if (!email) throw Error("Please provide your email");
-        if (!contact) throw Error("Please provide your contact");
-        if (!password) throw Error("Please provide your password");
-        if (!role) throw Error("Please provide your role");
+        if (!name || !email || !password || !role) {
+            throw new Error("Please provide all required information (name, email, password, role)");
+        }
 
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        const existingUser = await db.execute(
+            "SELECT * FROM signup WHERE email = ?",
+            [email]
+        );
+        if (existingUser[0].length > 0) {
             throw Error("Email already exists. Please choose a different email.");
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const id = uuid.v4();
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+        let sql = `INSERT INTO signup (name, email, password, role)
+                     VALUES ('${name}', '${email}', '${hash}', '${role}')`;
 
-        const newUser = new User({
-            fullName,
-            email,
-            contact,
-            password: hashedPassword,
-            role,
-        });
-
-        await newUser.save();
-        res.status(200).json("Congratulations your account has been created");
+        await db.execute(sql, [name, email, hash, role]);
+        res.status(200).json({ message: "Congratulations, your account has been created", user: newUser });
     } catch (error) {
+        console.error("Error:", error.message);
         res.status(400).json({ error: error.message });
     }
 });
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
+    // console.log('Login request received');
+    console.log(process.env.DB_HOST);
+    console.log(process.env.DB_USER);
+    console.log(process.env.DB_PASSWORD);
+    console.log(process.env.DB_NAME);
 
     try {
-        if (!email) throw Error("Please provide your email");
-        if (!password) throw Error("Please provide your password");
+        if (!email) throw Error('Please insert your email');
+        if (!password) throw Error('Please insert your password');
 
-        const user = await User.findOne({ email });
-        if (!user) {
-            throw Error("User not found. Please check your email or signup.");
+        // Check if the email and password match the user in the database
+        const user = await db.execute('SELECT * FROM signup WHERE email = ?', [email]);
+
+        if (user[0].length === 0) {
+            throw Error('Invalid email or password');
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            throw Error("Incorrect password or Email. Please try again.");
+        const { id, name, password: storedPassword } = user[0][0];
+
+        const isMatch = await bcrypt.compare(password, storedPassword);
+        if (!isMatch) {
+            throw Error('Invalid email or password!');
         }
 
         // Generate JWT token
-        const token = jwt.sign(
-            { userId: user._id, email: user.email },
-            JWT_SECRET, // Replace with your own secret key
-            { expiresIn: "1h" } // Set token expiration time
-        );
+        const token = jwt.sign({ id, email }, JWT_SECRET, { expiresIn: '1hr' });
 
-        // Send name and JWT token in response
-        res.status(200).json({
-            message: "Login successful",
-            name: user.fullName,
-            token: token,
-        });
+        res.status(200).json({ id, name, token, message: 'Login successful!' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
+
 // JOB PAGE BACKEND
+
+// app.js
 
 app.post("/jobs", async (req, res) => {
     const { name, description, owner, contact, location } = req.body;
 
     try {
-        const newJob = new Job({
-            name,
-            description,
-            owner,
-            contact,
-            location,
-        });
-
-        await newJob.save();
+        // Call a function to save the job data to the database
+        await saveJob({ name, description, owner, contact, location });
 
         res.status(200).json("Job Added");
     } catch (error) {
@@ -115,7 +114,26 @@ app.post("/jobs", async (req, res) => {
     }
 });
 
-// EQUIPMENT PAGE BACKEND
+// Function to save job data to the database
+// Function to save job data to the database
+async function saveJob(jobData) {
+    try {
+        await db.execute('INSERT INTO jobs (name, description, owner, contact, location) VALUES (?, ?, ?, ?, ?)', [
+            jobData.name,
+            jobData.description,
+            jobData.owner,
+            jobData.contact,
+            jobData.location
+        ]);
+
+        // If insertion is successful, return true or any desired value
+        return true;
+    } catch (error) {
+        // Log detailed error message
+        console.error("Error saving job data:", error.message);
+        throw new Error("Error saving job data");
+    }
+}
 
 const multer = require('multer');
 const path = require('path');
@@ -148,8 +166,8 @@ app.post("/equipments", upload.single('image'), async (req, res) => {
         const imageFileName = imageFile.filename;
         const imageFilePath = path.join(__dirname, 'uploads', imageFileName);
 
-        // Create a new equipment instance and save it to the database
-        const newEquipment = await Equipment.create({
+        // Save the file path and other equipment details to the database
+        const newEquipment = await saveEquipmentToDatabase({
             image: imageFilePath,
             name,
             contact,
@@ -161,6 +179,28 @@ app.post("/equipments", upload.single('image'), async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+// Function to save equipment data to the database
+async function saveEquipmentToDatabase(equipmentData) {
+    try {
+        // Your logic for saving equipment data to the database goes here
+        // For example, if you're using a SQL database, you would execute an INSERT query
+        // For a NoSQL database like MongoDB, you would use the appropriate method to save data
+
+        // Example for SQL database (assuming you're using MySQL)
+        await db.execute('INSERT INTO equipments (image, name, contact, owner) VALUES (?, ?, ?, ?)', [
+            equipmentData.image,
+            equipmentData.name,
+            equipmentData.contact,
+            equipmentData.owner
+        ]);
+
+        // Return the saved equipment data
+        return equipmentData;
+    } catch (error) {
+        throw new Error("Error saving equipment data to the database");
+    }
+}
 
 
 

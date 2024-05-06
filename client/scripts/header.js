@@ -1,3 +1,18 @@
+// Select elements
+const menuIcon = document.querySelector('.menu-icon');
+const mobileNav = document.querySelector('.mobile-nav');
+const closeIcon = document.querySelector('.close-icon');
+
+// Toggle mobile nav on menu icon click
+menuIcon.addEventListener('click', () => {
+    mobileNav.classList.toggle('show');
+});
+
+// Close mobile nav on close icon click
+closeIcon.addEventListener('click', () => {
+    mobileNav.classList.remove('show');
+});
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const token = window.localStorage.getItem('token')
